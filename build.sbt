@@ -9,6 +9,5 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.specs2" %% "specs2" % "3.7.1" withSources()
+  "org.specs2" %% "specs2" % "2.4" withSources()
 )
-    
