@@ -5,7 +5,10 @@ import scala.io.Source
 object Pos {
 
   def main(args: Array[String]): Unit = {
-    val items = new Pos().parseCartData("cart.txt")
+    val pos = new Pos()
+    val items = pos.parseCartData("cart.txt")
+    val inventory = pos.parseInventoryData("inventory.txt")
+
 
   }
 }
@@ -26,5 +29,13 @@ class Pos {
         })
         Item(entry._1, quantity)
       }).toSeq
+  }
+
+  def parseInventoryData(fileName: String): Map[String, Good] = {
+    Source.fromURL(getClass.getClassLoader.getResource(fileName)).getLines().toList
+      .map(line => {
+        val elems = line.split(',')
+        (elems(0), Good(elems(0), elems(1).toFloat, elems(2), elems(3)))
+      }).toMap
   }
 }
