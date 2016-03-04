@@ -8,8 +8,7 @@ object Pos {
     val pos = new Pos()
     val items = pos.parseCartData("cart.txt")
     val inventory = pos.parseInventoryData("inventory.txt")
-
-
+    println(pos.checkout(items, inventory))
   }
 }
 
@@ -31,11 +30,19 @@ class Pos {
       }).toSeq
   }
 
-  def parseInventoryData(fileName: String): Map[String, Good] = {
+  def parseInventoryData(fileName: String): Map[String, Goods] = {
     Source.fromURL(getClass.getClassLoader.getResource(fileName)).getLines().toList
       .map(line => {
         val elems = line.split(',')
-        (elems(0), Good(elems(0), elems(1).toFloat, elems(2), elems(3)))
+        (elems(0), Goods(elems(0), elems(1).toFloat, elems(2), elems(3), elems(4).toInt))
       }).toMap
+  }
+
+  def checkout(items: Seq[Item], inventory: Map[String, Goods]): String = {
+    val order = items.map(item => {
+      Calculator(item, inventory)
+    })
+
+    new Invoice(order).toString
   }
 }

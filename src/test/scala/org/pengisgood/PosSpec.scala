@@ -15,7 +15,7 @@ class PosSpec extends org.specs2.mutable.Specification {
       val inventory = pos.parseInventoryData("inventory.txt")
 
       inventory.keys.size mustEqual 3
-      inventory.get("ITEM000001").get mustEqual Good("ITEM000001", 1.00f, "羽毛球", "个")
+      inventory.get("ITEM000001").get mustEqual Goods("ITEM000001", 1.00f, "羽毛球", "个", 1)
     }
   }
 
